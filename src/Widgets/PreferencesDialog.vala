@@ -139,6 +139,7 @@ public class PreferencesDialog : Gtk.Dialog {
         font_btn = new Gtk.FontButton ();
         font_btn.use_font = true;
         font_btn.use_size = true;
+        font_btn.halign = Gtk.Align.START;
 
         if (prefs.editor_font != "") {
             font_btn.set_font_name (prefs.editor_font);
@@ -146,6 +147,7 @@ public class PreferencesDialog : Gtk.Dialog {
 
         var font_label = new Gtk.Label.with_mnemonic (_("Editor _font:"));
         font_label.mnemonic_widget = font_btn;
+        font_label.halign = Gtk.Align.END;
 
         layout.attach (font_label, 0, row, 1, 1);
         layout.attach_next_to (font_btn, font_label, Gtk.PositionType.RIGHT, 1, 1);
@@ -157,6 +159,7 @@ public class PreferencesDialog : Gtk.Dialog {
         var scheme_renderer = new Gtk.CellRendererText ();
         scheme_box.pack_start (scheme_renderer, true);
         scheme_box.add_attribute (scheme_renderer, "text", 1);
+        scheme_box.halign = Gtk.Align.START;
 
         var schemes = this.get_source_schemes ();
         int i = 0;
@@ -174,6 +177,7 @@ public class PreferencesDialog : Gtk.Dialog {
 
         var scheme_label = new Gtk.Label.with_mnemonic (_("Editor _theme:"));
         scheme_label.mnemonic_widget = scheme_box;
+        scheme_label.halign = Gtk.Align.END;
 
         layout.attach (scheme_label, 0, row, 1, 1);
         layout.attach_next_to (scheme_box, scheme_label, Gtk.PositionType.RIGHT, 1, 1);
@@ -196,8 +200,11 @@ public class PreferencesDialog : Gtk.Dialog {
 
         // Dark theme
         var dark_theme_label = new Gtk.Label (_("Enable dark theme"));
+        dark_theme_label.halign = Gtk.Align.END;
+
         dark_theme_switch = new Gtk.Switch ();
         dark_theme_switch.active = prefs.prefer_dark_theme;
+        dark_theme_switch.halign = Gtk.Align.START;
 
         layout.attach (dark_theme_label, 0, row, 1, 1);
         layout.attach_next_to (dark_theme_switch, dark_theme_label, Gtk.PositionType.RIGHT, 1, 1);
@@ -231,6 +238,7 @@ public class PreferencesDialog : Gtk.Dialog {
         var text_renderer = new Gtk.CellRendererText ();
         stylesheet_box.pack_start (text_renderer, true);
         stylesheet_box.add_attribute (text_renderer, "text", 0);
+        stylesheet_box.halign = Gtk.Align.START;
 
         if (!prefs.render_stylesheet) {
             stylesheet_box.active = 0;
@@ -241,6 +249,7 @@ public class PreferencesDialog : Gtk.Dialog {
         }
 
         var stylesheet_label = new Gtk.Label (_("Style Sheet"));
+        stylesheet_label.halign = Gtk.Align.END;
 
         layout.attach (stylesheet_label, 0, row, 1, 1);
         layout.attach_next_to (stylesheet_box, stylesheet_label, Gtk.PositionType.RIGHT, 1, 1);
@@ -264,9 +273,11 @@ public class PreferencesDialog : Gtk.Dialog {
         row++;
 
         var syntax_highlighting_label = new Gtk.Label (_("Enable syntax highlighting"));
+        syntax_highlighting_label.halign = Gtk.Align.END;
 
         syntax_highlighting_switch = new Gtk.Switch ();
         syntax_highlighting_switch.active = prefs.render_syntax_highlighting;
+        syntax_highlighting_switch.halign = Gtk.Align.START;
 
 /*        autosave_btn.toggled.connect((b) => {
             if (autosave_btn.get_active ()) {
@@ -282,7 +293,7 @@ public class PreferencesDialog : Gtk.Dialog {
             prefs.autosave_interval = (int) autosave_spin.get_value ();
         });
 
-        dark_theme_btn.toggled.connect((b) => {
+        dark_stylesheet_box.halign = Gtk.Align.START;theme_btn.toggled.connect((b) => {
             prefs.prefer_dark_theme = dark_theme_btn.get_active ();
         });
 
@@ -303,7 +314,7 @@ public class PreferencesDialog : Gtk.Dialog {
             stylesheet_chooser.set_sensitive (activated);
         });
         stylesheet_chooser.selection_changed.connect (() => {
-            prefs.render_stylesheet_uri = stylesheet_chooser.get_uri ();
+           syntax_highlighting_switch prefs.render_stylesheet_uri = stylesheet_chooser.get_uri ();
             prefs.render_stylesheet = true;
         });
 
