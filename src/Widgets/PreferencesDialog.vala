@@ -40,89 +40,6 @@ public class PreferencesDialog : Gtk.Dialog {
         this.set_modal (true);
         this.border_width = 10;
 
-        var main_layout = new Gtk.Box (Gtk.Orientation.VERTICAL, 10);
-
-        var editor_prefs = get_editor_prefs ();
-        var preview_prefs = get_preview_prefs ();
-
-        var stack = new Gtk.Stack ();
-        stack.halign = Gtk.Align.CENTER;
-        var switcher = new Gtk.StackSwitcher ();
-
-        switcher.halign = Gtk.Align.CENTER;
-        switcher.set_stack (stack);
-
-        stack.add_titled (editor_prefs, "editor-prefs", _("Editor"));
-        stack.add_titled (preview_prefs, "preview-prefs", _("Preview"));
-
-        main_layout.pack_start (switcher);
-        main_layout.pack_start (stack);
-
-        get_content_area ().add (main_layout);
-    }
-
-    private void setup_events () {
-        font_btn.font_set.connect (() => {
-            unowned string name = font_btn.get_font_name ();
-            prefs.editor_font = name;
-        });
-
-        scheme_box.changed.connect(() => {
-            Value box_val;
-            scheme_box.get_active_iter (out schemes_iter);
-            schemes_store.get_value (schemes_iter, 0, out box_val);
-
-            var scheme_id = (string) box_val;
-            prefs.editor_scheme = scheme_id;
-        });
-
-        autosave_btn.toggled.connect((b) => {
-            if (autosave_btn.get_active ()) {
-                prefs.autosave_interval = (int) autosave_spin.get_value ();
-            } else {
-                prefs.autosave_interval = 0;
-            }
-        });
-        autosave_spin.changed.connect(() => {
-            if (!autosave_btn.get_active ()) {
-                return;
-            }
-            prefs.autosave_interval = (int) autosave_spin.get_value ();
-        });
-
-        stylesheet_box.changed.connect (() => {
-            Gtk.TreeIter iter;
-            stylesheet_box.get_active_iter (out iter);
-
-            GLib.Value state_value;
-            stylesheet_store.get_value (iter, 1, out state_value);
-            StylesheetState state = (StylesheetState) state_value.get_int ();
-
-            switch (state) {
-            case StylesheetState.NONE:
-                prefs.render_stylesheet = false;
-                csb_revealer.set_reveal_child (false);
-                break;
-
-            case StylesheetState.CUSTOM:
-                csb_revealer.set_reveal_child (true);
-                break;
-
-            case StylesheetState.DEFAULT:
-                prefs.render_stylesheet = true;
-                prefs.render_stylesheet_uri = "";
-                csb_revealer.set_reveal_child (false);
-                break;
-            }
-        });
-
-        // can't use Gtk.Switch::state as it's not supported on gtk+-3.10
-        syntax_highlighting_switch.notify["active"].connect((state) => {
-            prefs.render_syntax_highlighting = syntax_highlighting_switch.get_active ();
-        });
-    }
-
-    private Gtk.Grid get_editor_prefs () {
         var layout = new Gtk.Grid ();
         layout.margin = 10;
         layout.row_spacing = 12;
@@ -187,17 +104,6 @@ public class PreferencesDialog : Gtk.Dialog {
             autosave_spin.set_value (10);
         }
 
-        return layout;
-    }
-
-    private Gtk.Grid get_preview_prefs () {
-        var layout = new Gtk.Grid ();
-        layout.margin = 10;
-        layout.row_spacing = 12;
-        layout.column_spacing = 9;
-        layout.halign = Gtk.Align.CENTER;
-        int row = 0;
-
         // Stylesheet
         stylesheet_store = new Gtk.ListStore (2, typeof (string), typeof (int));
         Gtk.TreeIter iter;
@@ -260,7 +166,69 @@ public class PreferencesDialog : Gtk.Dialog {
         layout.attach (syntax_highlighting_label, 0, row, 1, 1);
         layout.attach_next_to (syntax_highlighting_switch, syntax_highlighting_label,
                                Gtk.PositionType.RIGHT, 1, 1);
-        return layout;
+
+        get_content_area ().add (layout);
+    }
+
+    private void setup_events () {
+        font_btn.font_set.connect (() => {
+            unowned string name = font_btn.get_font_name ();
+            prefs.editor_font = name;
+        });
+
+        scheme_box.changed.connect(() => {
+            Value box_val;
+            scheme_box.get_active_iter (out schemes_iter);
+            schemes_store.get_value (schemes_iter, 0, out box_val);
+
+            var scheme_id = (string) box_val;
+            prefs.editor_scheme = scheme_id;
+        });
+
+        autosave_btn.toggled.connect((b) => {
+            if (autosave_btn.get_active ()) {
+                prefs.autosave_interval = (int) autosave_spin.get_value ();
+            } else {
+                prefs.autosave_interval = 0;
+            }
+        });
+        autosave_spin.changed.connect(() => {
+            if (!autosave_btn.get_active ()) {
+                return;
+            }
+            prefs.autosave_interval = (int) autosave_spin.get_value ();
+        });
+
+        stylesheet_box.changed.connect (() => {
+            Gtk.TreeIter iter;
+            stylesheet_box.get_active_iter (out iter);
+
+            GLib.Value state_value;
+            stylesheet_store.get_value (iter, 1, out state_value);
+            StylesheetState state = (StylesheetState) state_value.get_int ();
+
+            switch (state) {
+            case StylesheetState.NONE:
+                prefs.render_stylesheet = false;
+                csb_revealer.set_reveal_child (false);
+                break;
+
+            case StylesheetState.CUSTOM:
+                csb_revealer.set_reveal_child (true);
+                break;
+
+            case StylesheetState.DEFAULT:
+                prefs.render_stylesheet = true;
+                prefs.render_stylesheet_uri = "";
+                csb_revealer.set_reveal_child (false);
+                break;
+            }
+        });
+
+        // can't use Gtk.Switch::state as it's not supported on gtk+-3.10
+        syntax_highlighting_switch.notify["active"].connect((state) => {
+            prefs.render_syntax_highlighting = syntax_highlighting_switch.get_active ();
+        });
     }
 
     private Gtk.SourceStyleScheme[] get_source_schemes () {
