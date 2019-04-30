@@ -94,13 +94,6 @@
                     <property name="action-name">win.preferences</property>
                   </object>
                 </child>
-                <child>
-                  <object class="GtkMenuItem" id="aboutMenuItem">
-                    <property name="visible">True</property>
-                    <property name="label" translatable="yes">About</property>
-                    <property name="action-name">win.about</property>
-                  </object>
-                </child>
               </object>
             </child>
           </object>

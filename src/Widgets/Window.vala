@@ -75,8 +75,7 @@ public class Window : Gtk.ApplicationWindow {
         { "html", export_html_action },
         { "print", export_print_action },
 
-        { "preferences", preferences_action },
-        { "about", about_action }
+        { "preferences", preferences_action }
     };
 
     public Window (MarkMyWordsApp app) {
@@ -682,10 +681,6 @@ public class Window : Gtk.ApplicationWindow {
     private void preferences_action () {
         var dialog = new PreferencesDialog(this, this.prefs);
         dialog.show_all ();
-    }
-
-    private void about_action () {
-        app.show_about (this);
     }
 
     private enum DialogType {

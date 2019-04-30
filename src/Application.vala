@@ -1,7 +1,6 @@
 public class MarkMyWordsApp : Gtk.Application {
 
     private static bool print_version = false;
-    private static bool show_about_dialog = false;
 
     public MarkMyWordsApp () {
         Object (application_id: "com.voldyman.markmywords",
@@ -62,8 +61,6 @@ public class MarkMyWordsApp : Gtk.Application {
         if (print_version) {
             stdout.printf ("%s %s\n", MarkMyWords.APP_NAME, MarkMyWords.APP_VERSION);
             stdout.printf ("Copyright 2014-2015 '%s' Developers.\n", MarkMyWords.APP_NAME);
-        } else if (show_about_dialog) {
-            show_about ();
         } else {
             File? file = null;
             if (unclaimed_args > 0) {
@@ -77,19 +74,8 @@ public class MarkMyWordsApp : Gtk.Application {
         return 0;
     }
 
-    public void show_about (Window? parent = null) {
-        var dialog = new AboutDialog ();
-
-        if (parent != null) {
-            dialog.set_transient_for (parent);
-        } 
-
-        dialog.run ();
-    }
-
     static const OptionEntry[] entries = {
         { "version", 'v', 0, OptionArg.NONE, out print_version, N_("Print version info and exit"), null },
-        { "about", 'a', 0, OptionArg.NONE, out show_about_dialog, N_("Show about dialog"), null },
         { null }
     };
 
