@@ -206,10 +206,6 @@ public class Window : Gtk.ApplicationWindow {
             update_html_view ();
         });
 
-        prefs.notify["prefer-dark-theme"].connect ((s, p) => {
-            Gtk.Settings.get_default().set("gtk-application-prefer-dark-theme", prefs.prefer_dark_theme);
-        });
-
         prefs.notify["autosave-interval"].connect ((s, p) => {
             schedule_autosave_timer ();
         });

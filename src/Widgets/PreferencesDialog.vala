@@ -16,8 +16,6 @@ public class PreferencesDialog : Gtk.Dialog {
     private Gtk.CheckButton autosave_btn;
     private Gtk.SpinButton autosave_spin;
 
-    private Gtk.Switch dark_theme_switch;
-
     private Gtk.ListStore stylesheet_store;
     private Gtk.ComboBox stylesheet_box;
     private Gtk.FileChooserButton stylesheet_chooser;
@@ -90,11 +88,6 @@ public class PreferencesDialog : Gtk.Dialog {
                 return;
             }
             prefs.autosave_interval = (int) autosave_spin.get_value ();
-        });
-
-        // can't use Gtk.Switch::state as it's not supported on gtk+-3.10
-        dark_theme_switch.notify["active"].connect(() => {
-            prefs.prefer_dark_theme = dark_theme_switch.get_active ();
         });
 
         stylesheet_box.changed.connect (() => {
@@ -197,17 +190,6 @@ public class PreferencesDialog : Gtk.Dialog {
 //        hbox.pack_start (autosave_btn, false, false, 0);
 //        hbox.pack_start (autosave_spin, false, false, 0);
 //        hbox.pack_start (new Gtk.Label (_("minutes")), false, false, 0);
-
-        // Dark theme
-        var dark_theme_label = new Gtk.Label (_("Enable dark theme"));
-        dark_theme_label.halign = Gtk.Align.END;
-
-        dark_theme_switch = new Gtk.Switch ();
-        dark_theme_switch.active = prefs.prefer_dark_theme;
-        dark_theme_switch.halign = Gtk.Align.START;
-
-        layout.attach (dark_theme_label, 0, row, 1, 1);
-        layout.attach_next_to (dark_theme_switch, dark_theme_label, Gtk.PositionType.RIGHT, 1, 1);
 
         return layout;
     }

@@ -70,12 +70,6 @@
       <description>Switch on/off syntax highlighting when rendering</description>
     </key>
 
-    <key name="prefer-dark-theme" type="b">
-      <default>false</default>
-      <summary>Prefer dark theme</summary>
-      <description>Switch on/off window dark theme</description>
-    </key>
-
     <key name="autosave-interval" type="i">
       <default>0</default>
       <summary>Autosave interval</summary>
