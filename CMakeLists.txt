@@ -94,7 +94,7 @@ vala_precompile(VALA_C
   src/Meta.vala
   src/Widgets/Window.vala
   src/Widgets/DocumentView.vala
-  src/Widgets/PreferencesDialog.vala
+  src/Widgets/PreferencesPopover.vala
   src/Widgets/UnsavedChangesDialog.vala
   src/Services/FileHandler.vala
   src/Objects/Settings.vala

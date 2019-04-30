@@ -234,6 +234,10 @@ public class Window : Gtk.ApplicationWindow {
         }
 
         Gtk.IconTheme icon_theme = Gtk.IconTheme.get_default ();
+
+        var pref_button = (Gtk.MenuButton) builder.get_object ("prefButton");
+        pref_button.popover = new PreferencesPopover(this.prefs);
+
         var pref_tool_button = (Gtk.ToolButton) builder.get_object ("prefToolButton");
         var export_menu = (Gtk.MenuToolButton) builder.get_object ("exportMenu");
 
@@ -670,8 +674,6 @@ public class Window : Gtk.ApplicationWindow {
     }
 
     private void preferences_action () {
-        var dialog = new PreferencesDialog(this, this.prefs);
-        dialog.show_all ();
     }
 
     private enum DialogType {

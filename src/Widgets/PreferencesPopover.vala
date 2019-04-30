@@ -1,4 +1,4 @@
-public class PreferencesDialog : Gtk.Dialog {
+public class PreferencesPopover : Gtk.Popover {
     private enum StylesheetState {
         NONE,
         DEFAULT,
@@ -24,8 +24,7 @@ public class PreferencesDialog : Gtk.Dialog {
 
     private const string DEFAULT_STYLESHEET = "https://github.com/sindresorhus/github-markdown-css/raw/gh-pages/github-markdown.css";
 
-    public PreferencesDialog (Window parent, Preferences prefs) {
-        this.set_transient_for (parent);
+    public PreferencesPopover (Preferences prefs) {
         this.prefs = prefs;
 
         setup_ui ();
@@ -33,9 +32,6 @@ public class PreferencesDialog : Gtk.Dialog {
     }
 
     private void setup_ui () {
-        this.title = _("Preferences");
-        this.window_position = Gtk.WindowPosition.CENTER;
-        this.set_modal (true);
         this.border_width = 10;
 
         var layout = new Gtk.Grid ();
@@ -154,7 +150,11 @@ public class PreferencesDialog : Gtk.Dialog {
         layout.attach (csb_revealer, 1, row, 1, 1);
         row++;
 
-        get_content_area ().add (layout);
+        var stack = new Gtk.Stack ();
+        stack.add_named (layout, "main");
+
+        this.add (stack);
+        stack.show_all ();
     }
 
     private void setup_events () {

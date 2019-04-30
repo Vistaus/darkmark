@@ -53,7 +53,7 @@
       </object>
     </child>
     <child>
-      <object class="GtkButton" id="prefButton">
+      <object class="GtkMenuButton" id="prefButton">
         <property name="visible">True</property>
         <property name="tooltip-text" translatable="yes">Preferences</property>
         <property name="use-underline">True</property>
