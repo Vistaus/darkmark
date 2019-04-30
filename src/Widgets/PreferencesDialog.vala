@@ -20,8 +20,6 @@ public class PreferencesDialog : Gtk.Dialog {
     private Gtk.ComboBox stylesheet_box;
     private Gtk.FileChooserButton stylesheet_chooser;
 
-    private Gtk.Switch syntax_highlighting_switch;
-
     private Gtk.Revealer csb_revealer;
 
     private const string DEFAULT_STYLESHEET = "https://github.com/sindresorhus/github-markdown-css/raw/gh-pages/github-markdown.css";
@@ -156,17 +154,6 @@ public class PreferencesDialog : Gtk.Dialog {
         layout.attach (csb_revealer, 1, row, 1, 1);
         row++;
 
-        var syntax_highlighting_label = new Gtk.Label (_("Enable syntax highlighting"));
-        syntax_highlighting_label.halign = Gtk.Align.END;
-
-        syntax_highlighting_switch = new Gtk.Switch ();
-        syntax_highlighting_switch.active = prefs.render_syntax_highlighting;
-        syntax_highlighting_switch.halign = Gtk.Align.START;
-
-        layout.attach (syntax_highlighting_label, 0, row, 1, 1);
-        layout.attach_next_to (syntax_highlighting_switch, syntax_highlighting_label,
-                               Gtk.PositionType.RIGHT, 1, 1);
-
         get_content_area ().add (layout);
     }
 
@@ -223,11 +210,6 @@ public class PreferencesDialog : Gtk.Dialog {
                 csb_revealer.set_reveal_child (false);
                 break;
             }
-        });
-
-        // can't use Gtk.Switch::state as it's not supported on gtk+-3.10
-        syntax_highlighting_switch.notify["active"].connect((state) => {
-            prefs.render_syntax_highlighting = syntax_highlighting_switch.get_active ();
         });
     }
 

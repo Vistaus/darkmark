@@ -186,25 +186,21 @@ public class Window : Gtk.ApplicationWindow {
             });
         });
 
-        prefs.notify["render-syntax-highlighting"].connect ((s, p) => {
-            if (prefs.render_syntax_highlighting) {
-                if (syntax_stylesheet == null) {
-                    var css_uri = get_data_file_uri ("github-syntax.css");
-                    var css_file = File.new_for_uri (css_uri);
-                    syntax_stylesheet = FileHandler.load_content_from_file_sync (css_file);
-                }
-                if (syntax_script == null) {
-                    var js_uri = get_data_file_uri ("highlight.pack.js");
-                    var js_file = File.new_for_uri (js_uri);
-                    syntax_script = FileHandler.load_content_from_file_sync (js_file);
+        if (syntax_stylesheet == null) {
+            var css_uri = get_data_file_uri ("github-syntax.css");
+            var css_file = File.new_for_uri (css_uri);
+            syntax_stylesheet = FileHandler.load_content_from_file_sync (css_file);
+        }
+        if (syntax_script == null) {
+            var js_uri = get_data_file_uri ("highlight.pack.js");
+            var js_file = File.new_for_uri (js_uri);
+            syntax_script = FileHandler.load_content_from_file_sync (js_file);
 
-                    // Escape </script> tag
-                    syntax_script = syntax_script.replace("</script>", "\\<\\/script\\>");
-                }
-            }
+            // Escape </script> tag
+            syntax_script = syntax_script.replace("</script>", "\\<\\/script\\>");
+        }
 
-            update_html_view ();
-        });
+        update_html_view ();
 
         prefs.notify["autosave-interval"].connect ((s, p) => {
             schedule_autosave_timer ();
@@ -547,11 +543,10 @@ public class Window : Gtk.ApplicationWindow {
         if (prefs.render_stylesheet) {
             html += "<style>"+render_stylesheet+"</style>";
         }
-        if (prefs.render_syntax_highlighting) {
-            html += "<style>"+syntax_stylesheet+"</style>";
-            html += "<script>"+syntax_script+"</script>";
-            html += "<script>hljs.initHighlightingOnLoad();</script>";
-        }
+
+        html += "<style>"+syntax_stylesheet+"</style>";
+        html += "<script>"+syntax_script+"</script>";
+        html += "<script>hljs.initHighlightingOnLoad();</script>";
 
         html += "</head><body><div class=\"markdown-body\">";
         html += process(raw_mk);
