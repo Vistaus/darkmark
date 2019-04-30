@@ -53,19 +53,11 @@
       </object>
     </child>
     <child>
-      <object class="GtkMenuButton" id="prefMenuButton">
+      <object class="GtkButton" id="prefButton">
         <property name="visible">True</property>
-        <!-- <property name="tooltip-text" translatable="yes">Preferences</property>
-        <property name="use-underline">True</property> -->
-        <property name="menu-model">preferences-menu</property>
-        <menu id="preferences-menu">
-          <section>
-            <item>
-              <attribute name="label" translatable="yes">Preferences</attribute>
-              <attribute name="action">win.preferences</attribute>
-            </item>
-          </section>
-        </menu>
+        <property name="tooltip-text" translatable="yes">Preferences</property>
+        <property name="use-underline">True</property>
+        <property name="action-name">win.preferences</property>
         <style><class name="image-button"/></style>
         <child>
           <object class="GtkImage" id="menuIcon">

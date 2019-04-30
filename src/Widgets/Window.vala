@@ -242,7 +242,7 @@ public class Window : Gtk.ApplicationWindow {
         }
 
         Gtk.IconTheme icon_theme = Gtk.IconTheme.get_default ();
-        var pref_menu = (Gtk.MenuToolButton) builder.get_object ("prefMenu");
+        var pref_tool_button = (Gtk.ToolButton) builder.get_object ("prefToolButton");
         var export_menu = (Gtk.MenuToolButton) builder.get_object ("exportMenu");
 
         Gtk.Image menu_icon = (Gtk.Image) builder.get_object ("menu-icon");
@@ -254,7 +254,7 @@ public class Window : Gtk.ApplicationWindow {
                 alternate_icon = "gtk-preferences";
             }
             menu_icon.set_from_icon_name (alternate_icon, Gtk.IconSize.LARGE_TOOLBAR);
-            pref_menu.icon_name = alternate_icon;
+            pref_tool_button.icon_name = alternate_icon;
         }
 
         if (!icon_theme.has_icon ("document-export")) {

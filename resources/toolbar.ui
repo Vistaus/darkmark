@@ -79,23 +79,12 @@
           </object>
         </child>
         <child>
-          <object class="GtkMenuToolButton" id="prefMenu">
+          <object class="GtkToolButton" id="prefToolButton">
             <property name="visible">True</property>
-            <!-- <property name="tooltip-text" translatable="yes">Preferences</property>
-            <property name="use-underline">True</property> -->
+            <property name="tooltip-text" translatable="yes">Preferences</property>
+            <property name="use-underline">True</property>
+            <property name="action-name">win.preferences</property>
             <property name="icon-name">open-menu</property>
-            <child type="menu">
-              <object class="GtkMenu" id="prefSubMenu">
-                <property name="visible">True</property>
-                <child>
-                  <object class="GtkMenuItem" id="prefMenuItem">
-                    <property name="visible">True</property>
-                    <property name="label" translatable="yes">Preferences</property>
-                    <property name="action-name">win.preferences</property>
-                  </object>
-                </child>
-              </object>
-            </child>
           </object>
         </child>
       </object>
