@@ -187,10 +187,6 @@ public class PreferencesDialog : Gtk.Dialog {
             autosave_spin.set_value (10);
         }
 
-//        hbox.pack_start (autosave_btn, false, false, 0);
-//        hbox.pack_start (autosave_spin, false, false, 0);
-//        hbox.pack_start (new Gtk.Label (_("minutes")), false, false, 0);
-
         return layout;
     }
 
@@ -260,50 +256,6 @@ public class PreferencesDialog : Gtk.Dialog {
         syntax_highlighting_switch = new Gtk.Switch ();
         syntax_highlighting_switch.active = prefs.render_syntax_highlighting;
         syntax_highlighting_switch.halign = Gtk.Align.START;
-
-/*        autosave_btn.toggled.connect((b) => {
-            if (autosave_btn.get_active ()) {
-                prefs.autosave_interval = (int) autosave_spin.get_value ();
-            } else {
-                prefs.autosave_interval = 0;
-            }
-        });
-        autosave_spin.changed.connect(() => {
-            if (!autosave_btn.get_active ()) {
-                return;
-            }
-            prefs.autosave_interval = (int) autosave_spin.get_value ();
-        });
-
-        dark_stylesheet_box.halign = Gtk.Align.START;theme_btn.toggled.connect((b) => {
-            prefs.prefer_dark_theme = dark_theme_btn.get_active ();
-        });
-
-        stylesheet_none.toggled.connect((b) => {
-            if (stylesheet_none.get_active ()) {
-                prefs.render_stylesheet = false;
-            }
-        });
-        stylesheet_default.toggled.connect((b) => {
-            if (stylesheet_default.get_active ()) {
-                prefs.render_stylesheet_uri = "";
-                prefs.render_stylesheet = true;
-            }
-        });
-        stylesheet_custom.toggled.connect((b) => {
-            var activated = stylesheet_custom.get_active ();
-            stylesheet_label.set_sensitive (activated);
-            stylesheet_chooser.set_sensitive (activated);
-        });
-        stylesheet_chooser.selection_changed.connect (() => {
-           syntax_highlighting_switch prefs.render_stylesheet_uri = stylesheet_chooser.get_uri ();
-            prefs.render_stylesheet = true;
-        });
-
-        syntax_highlighting_btn.toggled.connect((b) => {
-            prefs.render_syntax_highlighting = syntax_highlighting_btn.get_active ();
-        });
-*/
 
         layout.attach (syntax_highlighting_label, 0, row, 1, 1);
         layout.attach_next_to (syntax_highlighting_switch, syntax_highlighting_label,
