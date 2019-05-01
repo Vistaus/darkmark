@@ -74,7 +74,7 @@ public class MarkMyWordsApp : Gtk.Application {
         return 0;
     }
 
-    static const OptionEntry[] entries = {
+    const OptionEntry[] entries = {
         { "version", 'v', 0, OptionArg.NONE, out print_version, N_("Print version info and exit"), null },
         { null }
     };

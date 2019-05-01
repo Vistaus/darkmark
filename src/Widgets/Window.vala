@@ -619,11 +619,7 @@ public class Window : Gtk.ApplicationWindow {
         string text = doc.get_selected_text ();
         string html = process (text);
 
-        try {
-            clipboard.set_text (html, -1);
-        } catch (Error e) {
-            warning ("Could not copy HTML: %s", e.message);
-        }
+        clipboard.set_text (html, -1);
     }
 
     private void export_html_action () {
