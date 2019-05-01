@@ -1,3 +1,5 @@
+using Granite;
+
 public class Window : Gtk.ApplicationWindow {
     private MarkMyWordsApp app;
     private DocumentView doc;
@@ -94,21 +96,37 @@ public class Window : Gtk.ApplicationWindow {
         var dont_quit = false;
 
         if (file_modified) {
-            var d = new UnsavedChangesDialog.for_quit (this);
-            var result = d.run ();
+            var dialog = new Granite.MessageDialog (
+                _("Save changes before closing?"),
+                _("If you don't save, changes will be permanently lost."),
+                new ThemedIcon ("dialog-warning"),
+                Gtk.ButtonsType.NONE
+            );
+
+            dialog.transient_for = this;
+
+            var no_save_button = (Gtk.Button) dialog.add_button (_("Close Without Saving"), Gtk.ResponseType.NO);
+            no_save_button.get_style_context ().add_class (Gtk.STYLE_CLASS_DESTRUCTIVE_ACTION);
+
+            dialog.add_button (_("Cancel"), Gtk.ResponseType.CANCEL);
+            dialog.add_button (_("Save"), Gtk.ResponseType.YES);
+            dialog.set_default_response (Gtk.ResponseType.YES);
+
+            var result = dialog.run ();
+            dialog.destroy ();
 
             switch (result) {
-            case UnsavedChangesResult.QUIT:
-                dont_quit = false;
-                break;
-
-            // anything other than quit means cancel
-            case UnsavedChangesResult.CANCEL:
-            default:
-                dont_quit = true;
-                break;
+                case Gtk.ResponseType.CANCEL:
+                case Gtk.ResponseType.DELETE_EVENT:
+                    dont_quit = true;
+                    break;
+                case Gtk.ResponseType.YES:
+                    save_action ();
+                    break;
+                case Gtk.ResponseType.NO:
+                    dont_quit = false;
+                    break;
             }
-            d.destroy ();
         }
 
         // save state anyway
@@ -570,18 +588,35 @@ public class Window : Gtk.ApplicationWindow {
 
     private void new_action () {
         if (file_modified) {
-            var dialog = new UnsavedChangesDialog.for_close_file (this);
+            var dialog = new Granite.MessageDialog (
+                _("Save changes before closing?"),
+                _("If you don't save, changes will be permanently lost."),
+                new ThemedIcon ("dialog-warning"),
+                Gtk.ButtonsType.NONE
+            );
+
+            dialog.transient_for = this;
+
+            var no_save_button = (Gtk.Button) dialog.add_button (_("Close Without Saving"), Gtk.ResponseType.NO);
+            no_save_button.get_style_context ().add_class (Gtk.STYLE_CLASS_DESTRUCTIVE_ACTION);
+
+            dialog.add_button (_("Cancel"), Gtk.ResponseType.CANCEL);
+            dialog.add_button (_("Save"), Gtk.ResponseType.YES);
+            dialog.set_default_response (Gtk.ResponseType.YES);
+
             var result = dialog.run ();
             dialog.destroy ();
 
-            if (result == UnsavedChangesResult.CANCEL) {
-                return;
-            } else if (result == UnsavedChangesResult.SAVE) {
-                save_action ();
-            } else {
-                // the user doesn't care about the file,
-                // close it anyway
-                reset_file ();
+            switch (result) {
+                case Gtk.ResponseType.CANCEL:
+                case Gtk.ResponseType.DELETE_EVENT:
+                    return;
+                case Gtk.ResponseType.YES:
+                    save_action ();
+                    break;
+                case Gtk.ResponseType.NO:
+                    reset_file ();
+                    break;
             }
         }
         reset_file ();
