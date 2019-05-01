@@ -40,6 +40,7 @@ pkg_check_modules(DEPS REQUIRED
   gtksourceview-3.0>=3.10
   gthread-2.0
   gtk+-3.0>=3.9.10
+  granite>=5.2.3
 )
 
 add_definitions(${DEPS_CFLAGS})
@@ -104,6 +105,7 @@ vala_precompile(VALA_C
 PACKAGES
   gtksourceview-3.0
   gtk+-3.0
+  granite
   webkit2gtk-4.0
   discount
 OPTIONS
