@@ -2,7 +2,7 @@
 
 Deathly simple markdown editor
 
-
+Based on [MarkMyWords](https://github.com/voldyman/MarkMyWords)
 
 ## Status
 
