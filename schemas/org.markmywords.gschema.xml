@@ -70,11 +70,5 @@
       <description>Save file automatically every n minutes</description>
     </key>
 
-    <key name="use-headerbar" type="b">
-      <default>true</default>
-      <summary>Use headerbar</summary>
-      <description>Should the window use a headerbar or a toolbar</description>
-    </key>
-
   </schema>
 </schemalist>

@@ -236,20 +236,12 @@ public class Window : Gtk.ApplicationWindow {
         box.expand = true;
 
         Gtk.Builder builder;
-        if (prefs.use_headerbar) {
-            builder = new Gtk.Builder.from_resource ("/com/voldyman/markmywords/ui/headerbar.ui");
-            headerbar = (Gtk.HeaderBar) builder.get_object ("headerbar");
-            headerbar.set_title (MarkMyWords.APP_NAME);
+        builder = new Gtk.Builder.from_resource ("/com/voldyman/markmywords/ui/headerbar.ui");
+        headerbar = (Gtk.HeaderBar) builder.get_object ("headerbar");
+        headerbar.set_title (MarkMyWords.APP_NAME);
 
-            set_titlebar ((Gtk.Widget) headerbar);
-            add (box);
-        } else {
-            builder = new Gtk.Builder.from_resource ("/com/voldyman/markmywords/ui/toolbar.ui");
-            Gtk.Box layout = (Gtk.Box) builder.get_object ("layout");
-
-            layout.pack_start (box, false);
-            add (layout);
-        }
+        set_titlebar ((Gtk.Widget) headerbar);
+        add (box);
 
         Gtk.IconTheme icon_theme = Gtk.IconTheme.get_default ();
 

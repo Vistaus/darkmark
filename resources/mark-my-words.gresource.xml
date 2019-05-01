@@ -2,7 +2,6 @@
 <gresources>
   <gresource prefix="/com/voldyman/markmywords/ui">
     <file preprocess="xml-stripblanks" alias="headerbar.ui">./headerbar.ui</file>
-    <file preprocess="xml-stripblanks" alias="toolbar.ui">./toolbar.ui</file>
     <!-- <file alias="markmywords.css">./mark-my-words.css</file> -->
   </gresource>
   <!-- <gresource prefix="/com/voldyman/markmywords/gtk">
